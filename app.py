@@ -1,15 +1,12 @@
 import fastapi
 import fastapi.encoders
-import pydantic
-from celery_app.celery_scrape import create_celery
 from tasks.scrape_offer import scrape_offer
 import csv
 from typing import List, Dict
 
 
 app = fastapi.FastAPI()
-app.celery_app = create_celery()
-celery = app.celery_app
+
 
 @app.get("/offers")
 def read_offers():

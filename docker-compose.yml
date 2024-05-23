@@ -1,4 +1,5 @@
 services:
+
   app:
     container_name: app
     build: .
@@ -8,10 +9,11 @@ services:
     ports:
       - 8000:8000
     restart: always
+
   celery_worker:
     container_name: celery_worker
     build: .
-    command: celery -A app.celery worker -P gevent -Q scraping-queue
+    command: celery -A celery_worker worker -P gevent -Q scraping-queue
     volumes:
       - .:/app
     depends_on:

@@ -16,7 +16,7 @@ def scrape_offer(offer_link: str):
     soup = BeautifulSoup(response.text, 'html.parser')
     title = get_title(soup)
     time.sleep(5)
-    with open('offers.csv', 'a', newline='') as file:
+    with open('offers.csv', 'a', newline='', encoding="utf-8", errors="ignore") as file:
         writer = csv.writer(file)
         writer.writerow([offer_link, title])
     print(offer_link)

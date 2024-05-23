@@ -10,7 +10,7 @@ app = fastapi.FastAPI()
 
 @app.get("/offers")
 def read_offers():
-    with open("offers.csv", "r") as file:
+    with open("offers.csv", "r", encoding="utf-8", errors="ignore" ) as file:
         reader = csv.reader(file)
         data = []
         next(reader)

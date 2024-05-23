@@ -1,15 +1,17 @@
+### First Steps
 
-Running Worker
+Create `.env` file with these environment variables
+- CELERY_BROKER_URL="sqs://sqs.us-east-1.amazonaws.com/400182930435/celery_study"
+- AWS_ACCESS_KEY_ID="AKIAV2LGC5QBT6LT7CO5"
+- AWS_SECRET_ACCESS_KEY="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"
+
+### Running App
+
 ``` bash
-celery -A app.celery worker -P gevent -Q scraping-queue
+docker-compose up --build
 ```
 
-Running Fast API application
-``` bash
-uvicorn app:app --host 127.0.0.1 --port 8000
-```
-
-After run, can use the Fast API swagger to test endpoints. URL: http://127.0.0.1:8000/docs
+After run, can use the Fast API swagger to test endpoints. URL: http://localhost:8000/docs
 
 **/offers/add_offers/** Endpoints uses a post body like this
 

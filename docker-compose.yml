@@ -1,0 +1,20 @@
+services:
+  app:
+    container_name: app
+    build: .
+    command: uvicorn app:app --host 0.0.0.0 --port 8000 --reload
+    volumes:
+      - .:/app
+    ports:
+      - 8000:8000
+    restart: always
+  celery_worker:
+    container_name: celery_worker
+    build: .
+    command: celery -A app.celery worker -P gevent -Q scraping-queue
+    volumes:
+      - .:/app
+    depends_on:
+      - app
+    env_file:
+      - .env

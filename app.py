@@ -1,6 +1,7 @@
 import fastapi
 import fastapi.encoders
 from tasks.scrape_offer import scrape_offer
+from tasks.offers import delete_offers, select_offers
 import csv
 from typing import List, Dict
 
@@ -10,13 +11,9 @@ app = fastapi.FastAPI()
 
 @app.get("/offers")
 def read_offers():
-    with open("offers.csv", "r", encoding="utf-8", errors="ignore" ) as file:
-        reader = csv.reader(file)
-        data = []
-        next(reader)
-        for line in reader:
-            data.append({'offer_link': line[0], 'title': line[1]})
-    response_json = {'total_offers': (reader.line_num - 1), 'message': 'sucess', 'data': data}
+    data = select_offers()
+    data = [{'offer_link': row[0], 'title': row[1]} for row in data]
+    response_json = {'total_offers': len(data), 'message': 'sucess', 'data': data}
     return response_json
 
 @app.post('/offers/add_offers/v2')

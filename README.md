@@ -4,7 +4,11 @@ Create `.env` file with these environment variables
 - CELERY_BROKER_URL
 - AWS_ACCESS_KEY_ID
 - AWS_SECRET_ACCESS_KEY
-
+- DB_USER
+- DB_PASSWORD
+- DB_ADDRESS
+- DB_NAME
+- DB_PORT
 ### Running App
 
 ``` bash

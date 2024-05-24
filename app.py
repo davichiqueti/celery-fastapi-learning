@@ -1,25 +1,19 @@
 import fastapi
 import fastapi.encoders
-import pydantic
-from celery_app.celery_scrape import create_celery
 from tasks.scrape_offer import scrape_offer
+from tasks.offers import delete_offers, select_offers
 import csv
 from typing import List, Dict
 
 
 app = fastapi.FastAPI()
-app.celery_app = create_celery()
-celery = app.celery_app
+
 
 @app.get("/offers")
 def read_offers():
-    with open("offers.csv", "r") as file:
-        reader = csv.reader(file)
-        data = []
-        next(reader)
-        for line in reader:
-            data.append({'offer_link': line[0], 'title': line[1]})
-    response_json = {'total_offers': (reader.line_num - 1), 'message': 'sucess', 'data': data}
+    data = select_offers()
+    data = [{'offer_link': row[0], 'title': row[1]} for row in data]
+    response_json = {'total_offers': len(data), 'message': 'sucess', 'data': data}
     return response_json
 
 @app.post('/offers/add_offers/v2')
